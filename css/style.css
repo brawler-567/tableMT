@@ -1,0 +1,279 @@
+:root {
+  --bg: #0b0c0f;
+  --panel: #14161b;
+  --line: #2a2d35;
+  --text: #f2ebdc;
+  --muted: #a9a294;
+  --orange: #ff5a00;
+  --orange-hot: #ff7a2b;
+  --gold: #e0a24a;
+  --font-head: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { min-height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Фон: тёплое свечение «закатного неба» как на баннерах игры */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 55% at 22% 38%, rgba(255, 140, 40, 0.28), transparent 65%),
+    radial-gradient(ellipse 55% 45% at 85% 12%, rgba(120, 70, 130, 0.22), transparent 70%),
+    radial-gradient(ellipse 80% 40% at 50% 105%, rgba(200, 90, 20, 0.20), transparent 70%),
+    linear-gradient(180deg, #14110f 0%, #0b0c0f 55%, #07080a 100%);
+}
+.bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+  pointer-events: none;
+}
+
+/* Верхняя панель */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 28px;
+  height: 64px;
+  background: rgba(14, 15, 19, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+}
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 36px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 16px;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+}
+.topbar-tag {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+/* Экраны */
+main { min-height: calc(100vh - 64px); }
+.screen { display: none; animation: fade 0.35s ease; }
+.screen.active { display: block; }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Вступление */
+#screen-intro.active {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+  padding: 40px 8vw;
+}
+.intro { max-width: 680px; }
+.title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(48px, 9vw, 110px);
+  line-height: 0.98;
+  text-transform: uppercase;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+.subtitle {
+  margin-top: 18px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(20px, 3vw, 32px);
+  letter-spacing: 1px;
+  color: var(--orange-hot);
+}
+.lead {
+  margin: 26px 0 36px;
+  max-width: 560px;
+  font-size: 19px;
+  color: var(--text);
+  opacity: 0.9;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--orange);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover {
+  background: var(--orange-hot);
+  box-shadow: 0 6px 24px rgba(255, 90, 0, 0.35);
+  transform: translateY(-1px);
+}
+.btn:active { transform: translateY(1px); }
+.btn-ghost {
+  padding: 10px 22px;
+  background: transparent;
+  border: 1px solid var(--orange);
+  color: var(--text);
+  font-size: 15px;
+}
+.btn-ghost:hover { background: rgba(255, 90, 0, 0.18); box-shadow: none; }
+
+/* Выбор карт */
+#screen-maps { padding: 32px 4vw 60px; }
+.maps-head {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto 28px;
+}
+.maps-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 42px);
+  letter-spacing: 1px;
+}
+.maps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.map-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.map-card:hover, .map-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--orange);
+  box-shadow: 0 10px 30px rgba(255, 90, 0, 0.22);
+  outline: none;
+}
+.map-thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #0e1014;
+}
+.map-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.map-thumb.no-img {
+  background:
+    repeating-linear-gradient(45deg, #15181e 0, #15181e 12px, #12151a 12px, #12151a 24px);
+}
+.map-thumb.no-img::after {
+  content: "нет картинки";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.map-num {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  min-width: 28px;
+  padding: 2px 8px;
+  background: rgba(11, 12, 15, 0.8);
+  border-left: 3px solid var(--orange);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+}
+.map-name {
+  padding: 12px 14px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-top: 2px solid var(--orange);
+}
+
+/* Уведомление */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 20px);
+  padding: 12px 24px;
+  background: var(--panel);
+  border: 1px solid var(--orange);
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 20;
+}
+.toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* Адаптив */
+@media (max-width: 900px) {
+  .maps-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+@media (max-width: 600px) {
+  .topbar { padding: 0 16px; }
+  .topbar-tag { display: none; }
+  .maps-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .maps-head { flex-wrap: wrap; gap: 14px; }
+}
