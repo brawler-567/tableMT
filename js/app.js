@@ -3,14 +3,12 @@
 
   var screens = {
     intro: document.getElementById("screen-intro"),
-    maps: document.getElementById("screen-maps")
+    maps: document.getElementById("screen-maps"),
+    tactics: document.getElementById("screen-tactics")
   };
   var grid = document.getElementById("maps-grid");
   var toast = document.getElementById("toast");
   var toastTimer = null;
-
-  // Выбранная карта (понадобится на экране тактик)
-  window.state = { selectedMap: null };
 
   function show(name) {
     if (!screens[name]) name = "intro";
@@ -20,20 +18,37 @@
     window.scrollTo(0, 0);
   }
 
-  function go(name) {
-    var hash = name === "intro" ? "" : "#" + name;
-    if (location.hash === hash || (hash === "" && location.hash === "")) {
-      show(name);
+  function findMap(id) {
+    var num = Number(id);
+    for (var i = 0; i < window.MAPS.length; i++) {
+      if (window.MAPS[i].id === num) return window.MAPS[i];
+    }
+    return null;
+  }
+
+  // Маршруты: "" (вступление), "#maps", "#tactics/<id карты>"
+  function applyRoute() {
+    var parts = (location.hash.replace("#", "") || "intro").split("/");
+    if (parts[0] === "tactics") {
+      var map = findMap(parts[1]);
+      if (!map) { go("maps"); return; }
+      show("tactics");
+      window.Tactics.open(map);
+      return;
+    }
+    show(parts[0]);
+  }
+
+  function go(route) {
+    var hash = route === "intro" ? "" : "#" + route;
+    if (location.hash === hash) {
+      applyRoute();
     } else if (hash === "") {
       history.pushState(null, "", location.pathname + location.search);
-      show(name);
+      applyRoute();
     } else {
       location.hash = hash; // сработает hashchange
     }
-  }
-
-  function currentFromHash() {
-    return location.hash.replace("#", "") || "intro";
   }
 
   function showToast(text) {
@@ -77,10 +92,7 @@
 
       card.appendChild(thumb);
       card.appendChild(name);
-      card.addEventListener("click", function () {
-        window.state.selectedMap = map;
-        showToast("Выбрана: " + map.name + ". Экран тактик — следующий шаг.");
-      });
+      card.addEventListener("click", function () { go("tactics/" + map.id); });
       frag.appendChild(card);
     });
     grid.appendChild(frag);
@@ -88,12 +100,15 @@
 
   document.getElementById("btn-start").addEventListener("click", function () { go("maps"); });
   document.getElementById("btn-back").addEventListener("click", function () { go("intro"); });
+  document.getElementById("tac-back").addEventListener("click", function () { go("maps"); });
   document.getElementById("brand").addEventListener("click", function (e) {
     e.preventDefault();
     go("intro");
   });
-  window.addEventListener("hashchange", function () { show(currentFromHash()); });
+  window.addEventListener("hashchange", applyRoute);
+
+  window.App = { go: go, toast: showToast };
 
   renderMaps();
-  show(currentFromHash());
+  applyRoute();
 })();
