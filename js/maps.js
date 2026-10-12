@@ -1,0 +1,22 @@
+window.MAPS = [
+  { id: 1,  name: "Жемчужная река",  file: "maps/asia_miao.png" },
+  { id: 2,  name: "Тихий берег",  file: "maps/canada_a.png" },
+  { id: 3,  name: "Утёс",  file: "maps/cliff.png" },
+  { id: 4,  name: "Промзона",  file: "maps/czech.png" },
+  { id: 5,  name: "Песчаная река",  file: "maps/desert.png" },
+  { id: 6,  name: "Энск",  file: "maps/ensk.png" },
+  { id: 7,  name: "Рыбацкая бухта",  file: "maps/fishing_bay.png" },
+  { id: 8,  name: "Рудники",  file: "maps/hills.png" },
+  { id: 9,  name: "Химмельсдорф",  file: "maps/himmelsdorf.png" },
+  { id: 10, name: "Карелия", file: "maps/karelia.png" },
+  { id: 11, name: "Ласвилль", file: "maps/lakeville.png" },
+  { id: 12, name: "Затерянный город", file: "maps/lost_city_ctf.png" },
+  { id: 13, name: "Малиновка", file: "maps/malinovka.png" },
+  { id: 14, name: "Линия Маннергейма", file: "maps/mannerheim_line.png" },
+  { id: 15, name: "Мурованка", file: "maps/murovanka.png" },
+  { id: 16, name: "Хайвей", file: "maps/north_america.png" },
+  { id: 17, name: "Прохоровка", file: "maps/prohorovka.png" },
+  { id: 18, name: "Руинберг", file: "maps/ruinberg.png" },
+  { id: 19, name: "Линия Зигфрида", file: "maps/siegfried_line.png" },
+  { id: 20, name: "Степи", file: "maps/steppes.png" }
+];
